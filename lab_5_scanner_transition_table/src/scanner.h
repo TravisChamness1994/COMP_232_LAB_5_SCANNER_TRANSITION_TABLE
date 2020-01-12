@@ -33,6 +33,7 @@ int findClassIndex(TRANS_TABLE *table, char c);
 TOKEN *scanner(TRANS_TABLE *table);
 void printToken(TOKEN *, TRANS_TABLE *table);
 void freeToken(TOKEN **);
+void freeTable(TRANS_TABLE **);
 
 #define BUF_SIZE 128
 #define MAX_LINE_LENGTH 256
