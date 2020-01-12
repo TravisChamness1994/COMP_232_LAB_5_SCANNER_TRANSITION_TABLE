@@ -232,7 +232,7 @@ Again, include your test inputs alongside their outputs and your include FSA in 
 
 This last task is optional. It is drastically harder than the assigned tasks, and I will provide far less direction.
 
-Build a utility in C which takes as input a table (encoded in the format above, or in a different format of your conception) and creates a nested-cases scanner in C (like the one we made in the last lab) for the provided language.
+Build a utility in C which takes as input a table (encoded in the format above, or in a different format of your conception) and creates a corresponding nested-cases scanner in C (like the one we made in the last lab).
 
 Note that the goal is not to recreate what is done in the lab download. The implementation that was provided with the lab reads a file containing a table and then uses that configuration to tokenize an input in a different file.
 
