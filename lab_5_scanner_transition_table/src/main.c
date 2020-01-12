@@ -1,16 +1,14 @@
 #include "scanner.h"
-#include <unistd.h>
 
 int main(int argc, char** argv)
 {
     TOKEN *token = NULL;
 
-
-    freopen(argv[1], "r", stdin); // switch stdin to get the table from the config file
+    freopen(argv[1], "r", stdin);
 
     TRANS_TABLE *table = readTable();
 
-    freopen(argv[2], "r", stdin); // switch stdin to read from the input file
+    freopen(argv[2], "r", stdin);
 
     while ((token = scanner(table)) != NULL)
     {
