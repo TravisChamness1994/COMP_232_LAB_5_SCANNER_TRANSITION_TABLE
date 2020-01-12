@@ -222,6 +222,8 @@ Create an FSA and transition table for the following grammar:
 
 Your table should be put in a file called `table_2.table` in the `tables` folder in your lab. Construct test cases for your table and put them in `input_2.txt` in the `inputs` folder.
 
+You may assume that identifiers (`print` and `repeat`) and keywords will be distinguished by some post-processing; they may both return the same type of token.
+
 Again, include your test inputs alongside their outputs and your include FSA in your documentation.
 
 ## Bonus Task
