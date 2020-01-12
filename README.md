@@ -80,14 +80,14 @@ Most of the character classes above should be intuitive based on the FSA. Note t
 
 Finally, we can represent the FSA as a transition table:
 
-                    | **`0-9`**   | **`+ -`**     | **`* / %`**    | **`(`**        | **`)`**        | **`\n \r\t`** | **`other`** |                 |
-:------------------ |:-----------:|:-------------:|:--------------:|:--------------:|:--------------:|:-------------:|:-----------:| ---------------:|
-**`INVALID_STATE`** | `INT_STATE` | `ADDOP_STATE` | `MULTOP_STATE` | `LPAREN_STATE` | `RPAREN_STATE` | *skip*        | *error*     | `INVALID_TOKEN` |
-**`NUMBER_STATE`**  | `INT_STATE` | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `NUMBER_TOKEN`  |
-**`ADDOP_STATE`**   | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `ADDOP_TOKEN`   |
-**`MULTOP_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `MULTOP_TOKEN`  |
-**`LPAREN_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `LPAREN_TOKEN`  |
-**`RPAREN_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `RPAREN_TOKEN`  |
+|                     | **`0-9`**   | **`+ -`**     | **`* / %`**    | **`(`**        | **`)`**        | **`\n \r\t`** | **`other`** |                 |
+|:------------------- |:-----------:|:-------------:|:--------------:|:--------------:|:--------------:|:-------------:|:-----------:| ---------------:|
+| **`INVALID_STATE`** | `INT_STATE` | `ADDOP_STATE` | `MULTOP_STATE` | `LPAREN_STATE` | `RPAREN_STATE` | *skip*        | *error*     | `INVALID_TOKEN` |
+| **`NUMBER_STATE`**  | `INT_STATE` | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `NUMBER_TOKEN`  |
+| **`ADDOP_STATE`**   | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `ADDOP_TOKEN`   |
+| **`MULTOP_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `MULTOP_TOKEN`  |
+| **`LPAREN_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `LPAREN_TOKEN`  |
+| **`RPAREN_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `RPAREN_TOKEN`  |
 
 
 Let's explore the transition table above.
