@@ -33,7 +33,7 @@ From here, we can design a finite state machine (or finite state automata, FSA f
 
 Note that in the figure above, the `INVALID` state is the starting state.
 
-There are a few simplifying shortcuts taken in the notation for the FSA above and which you will need to follow in your FSA design for your designed machines to work with the provided code later on:
+There are a few simplifying shortcuts taken in the notation for the FSA above and which you will need to follow in your FSA design for your designed machines to work with the provided code:
 
 * All states are accepting states; any state which would be a "reject" state in most pattern-recognizing FSAs is instead an "error accept" state, meaning the string which would be rejected is instead accepted and tokenized, but tokenized as an invalid token.
 * Any characters not represented by a transition are assumed to lead to acceptance in the current state. If the current state is a "valid accept" state, then the offending character should be assumed to be part of the next token (and thereby returned to the input stream). If, on the other hand, the current state is an "error accept", this means the offending character is part of the current (invalid) token (so it is not returned to the input stream).
@@ -120,10 +120,10 @@ Other than state transitions, there are three keywords in the table, each of whi
 
 Once a transition table has been conceived, it can be written in a more concise format for use as the definition of a tokenizer.
 
-The code provided in the lab handout takes tables exclusively in a very specific format. You'll want to open `table_1.txt` in the `tables` folder in the lab download, to read through it alongside this format:
+The code provided in the lab handout takes tables exclusively in a very specific format. You'll want to open `table_1.table` in the `tables` folder in the lab download, to read through it alongside this format:
 
 * Line 1 consists as a single character, to be used as a delimiter later on in the table.
-	* Choose a character that won't appear in the grammar, in `table_1.txt` it is the comma.
+	* Choose a character that won't appear in the grammar, in `table_1.table` it is the comma.
 * Line 2 consists of three integers, separated by spaces. These are (respectively):
 	* The number of token types (including `INVALID_TOKEN`).
 	* The number of states in the machine (including `INVALID_STATE`).
@@ -149,7 +149,13 @@ The code provided in the lab handout takes tables exclusively in a very specific
 	* The top-most row (denoting the character classes) is also omitted. The first column is for the first character class listed on line 5, and so on.
 * As a final touch, the transition table should end with a blank line.
 
-You'll notice, reading through `table_1.txt`, that some abbreviations have been made; `a` stands for *accept*, `s` for *skip* and `e` for *error*. This also means that `a`, `s` and `e` cannot be used as delimiters, nor can they be used as the names of states or token types.
+You'll notice, reading through `table_1.table`, that some abbreviations have been made; `a` stands for *accept*, `s` for *skip* and `e` for *error*. This also means that `a`, `s` and `e` cannot be used as delimiters, nor can they be used as the names of states or token types.
+
+## Running the Project
+
+In CLion, open the `Run` menu and select `Edit Configurations`. For the `scanner` executable, add two program arguments. The first should be the path from the table configuration file `table_1.table` located in the `tables` folder, and the second the path to the test scanner input `input_1.txt`, located in the `inputs` folder. Check the first few lines of the `main` function in `main.c` to understand why!
+
+After the run configurations have been set up, run! Compare `input_1.txt` to the output.
 
 ## TASK 1:
 
@@ -169,7 +175,7 @@ Expand the FSA and transition table above to work for the following grammar:
 <digit> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 ```
 
-Then, modify `table_1.txt` (in the `tables` folder in the lab download) to match your modifications.
+Then, modify `table_1.table` (in the `tables` folder in the lab download) to match your modifications.
 
 Finally, modify `input_1.txt` (in the `inputs` folder) to test your new table.
 
@@ -191,7 +197,7 @@ but still outputs invalid tokens when given inputs like:
 Create an FSA and transition table for the following grammar:
 
 ```
-<program> ::= <statement> | <program> <statement>
+<program> ::= <statement> | <statement> <program>
 <statement> ::= <assignStmt> | <repeatStmt> | <printStmt>
 
 <assignStmt> ::= <id> = <expr> ;
@@ -214,6 +220,18 @@ Create an FSA and transition table for the following grammar:
 <letter> ::= a | b | ... | z | A | B | ... | Z
 ```
 
-Your table should be put in a file called `table_2.txt` in the `tables` folder in your lab. Construct test cases for your table and put them in `input_2.txt` in the `inputs` folder.
+Your table should be put in a file called `table_2.table` in the `tables` folder in your lab. Construct test cases for your table and put them in `input_2.txt` in the `inputs` folder.
 
-Again, include your test inputs alongside their outputs and your FSA in your documentation.
+Again, include your test inputs alongside their outputs and your include FSA in your documentation.
+
+## Bonus Task
+
+This last task is optional. It is drastically harder than the assigned tasks, and I will provide far less direction.
+
+Build a utility in C which takes as input a table (encoded in the format above, or in a different format of your conception) and creates a nested-cases scanner in C (like the one we made in the last lab) for the provided language.
+
+Note that the goal is not to recreate what is done in the lab download. The implementation that was provided with the lab reads a file containing a table and then uses that configuration to tokenize an input in a different file.
+
+The goal of this task is to instead translate the table configuration file to C code. In other words, the goal is to create a compiler which takes code written in some-bad-"language"-for-scanner-configuration-designed-ad-hoc-for-the-sake-of-a-lab and compiles it to a scanner in C that works without the original configuration file. Note that C compiles to machine code, so anything that compiles to C also compiles to machine code!
+
+It may be prudent to store all token's values in string form; the alternative is to add some metatdata about each token type to the table configuration denoting how the string value of the token is to be processed and stored.
