@@ -192,6 +192,8 @@ but still outputs invalid tokens when given inputs like:
 * `.`
 * `. <any non-digit characters>`
 
+**IMPORTANT:** both the configuration (table) file and the input must end in a blank line!
+
 ## TASK 2:
 
 Create an FSA and transition table for the following grammar:
