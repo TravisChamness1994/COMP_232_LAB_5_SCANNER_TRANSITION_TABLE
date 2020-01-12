@@ -175,6 +175,17 @@ Finally, modify `input_1.txt` (in the `inputs` folder) to test your new table.
 
 Your submission documentation should include your test inputs alongside their corresponding outputs. It should also include the FSA, which may be a photo of a hand-drawn picture (which you can make in groups on the whiteboard in class), but it can be made using diagram drawing utilities like Gliffy if you prefer. Regardless of how the table is made, it must be neat and readable to receive credit.
 
+If you wish to challenge yourself, construct a table which accepts floats in all of these forms:
+
+* `<digits> . <digits>`
+* `<digits> .`
+* `. <digits>`
+
+but still outputs invalid tokens when given inputs like:
+
+* `.`
+* `. <any non-digit characters>`
+
 ## TASK 2:
 
 Create an FSA and transition table for the following grammar:
