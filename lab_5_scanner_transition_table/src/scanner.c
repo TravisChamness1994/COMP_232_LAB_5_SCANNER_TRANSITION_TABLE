@@ -2,44 +2,50 @@
 
 #define BUFFER_SIZE 256
 
-//
-// clean up the token structure
-//
+
 void freeToken(TOKEN **token)
 {
     if (*token == NULL)
         return;
 
-    // TODO free the token value if necessary
+    free((*token)->strval);
 
     free(*token);
 
     *token = NULL;
 }
 
-//
-// print a token
-//
+void freeTable(TRANS_TABLE **table)
+{
+    for (int index = 0; index < (*table)->n_token_types; index++)
+    {
+        free((*table)->tokens[index]);
+    }
+    free((*table)->tokens);
+
+    for (int index = 0; index < (*table)->n_states; index++)
+    {
+        free((*table)->states[index]);
+        free((*table)->table[index]);
+    }
+    free((*table)->states);
+    free((*table)->table);
+
+    for (int index = 0; index < (*table)->n_character_classes; index++)
+    {
+        free((*table)->character_classes[index]);
+    }
+    free((*table)->character_classes);
+
+    free((*table));
+    *table = NULL;
+}
+
+
 void printToken(TOKEN *token, TRANS_TABLE *table)
 {
     printf("<%s %s>\n", table->tokens[token->type], token->strval);
 }
-
-//
-// Check if a collected sequence of characters is a keyword.
-// If it is a keyword, change its type and return true
-// If it is not a keyword, update it as an identifier token and return False
-// (to update as identifier, copy the string into the tokens value and update the token type)
-//
-bool updateIfKeyword(TOKEN *token, char *string)
-{
-// TODO Implement the function
-}
-
-//
-// read the config file (your file containing the transition table)
-// use the config to set up the transition table struct
-//
 
 TRANS_TABLE *readTable()
 {
@@ -235,7 +241,7 @@ TOKEN *scanner(TRANS_TABLE *table)
     char buffer[BUFFER_SIZE];
     int bufferIndex = 0;
 
-    char currentChar = '\0';
+    char currentChar;
     int state = 0;
     int classIndex = 0;
 
