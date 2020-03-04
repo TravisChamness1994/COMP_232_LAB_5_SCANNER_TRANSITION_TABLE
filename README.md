@@ -27,7 +27,7 @@ We can quickly pick out the tokens:
 
 ## FSM
 
-From here, we can design a finite state machine (or finite state automata, FSM for short) for tokenization:
+From here, we can design a finite state machine (FSM) for tokenization:
 
 ![sample fsm](./figures/sample_fsa_1.png)
 
