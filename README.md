@@ -94,7 +94,7 @@ Let's explore the transition table above.
 
 The left-most column represents the current state of the machine. The top row represents the character class of the new character being processed. The contents of the table denote what action should be taken if the machine is in any state when it encounters a character from any class.
 
-For instance, the `INT_STATE` in the second column from the left and second row from the top means that if the FSM is in the `INVALID_STATE` and it encounters a digit `0-9`, it should transition to the `INT_STATE`.
+For instance, the `NUMBER_STATE` in the second column from the left and second row from the top means that if the FSM is in the `INVALID_STATE` and it encounters a digit `0-9`, it should transition to the `NUMBER_STATE`.
 
 While tokenizing, a buffer is used to hold all of the characters comprising the token being constructed. Whenever a state transition happens, the new character is added to this buffer, so when the token is done being constructed its entire value (in string form) is in the buffer.
 
