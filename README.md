@@ -82,8 +82,8 @@ Finally, we can represent the FSM as a transition table:
 
 |                     | **`0-9`**   | **`+ -`**     | **`* / %`**    | **`(`**        | **`)`**        | **`\n \r\t`** | **`other`** |                 |
 |:------------------- |:-----------:|:-------------:|:--------------:|:--------------:|:--------------:|:-------------:|:-----------:| ---------------:|
-| **`INVALID_STATE`** | `INT_STATE` | `ADDOP_STATE` | `MULTOP_STATE` | `LPAREN_STATE` | `RPAREN_STATE` | *skip*        | *error*     | `INVALID_TOKEN` |
-| **`NUMBER_STATE`**  | `INT_STATE` | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `NUMBER_TOKEN`  |
+| **`INVALID_STATE`** | `NUMBER_STATE` | `ADDOP_STATE` | `MULTOP_STATE` | `LPAREN_STATE` | `RPAREN_STATE` | *skip*        | *error*     | `INVALID_TOKEN` |
+| **`NUMBER_STATE`**  | `NUMBER_STATE` | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `NUMBER_TOKEN`  |
 | **`ADDOP_STATE`**   | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `ADDOP_TOKEN`   |
 | **`MULTOP_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `MULTOP_TOKEN`  |
 | **`LPAREN_STATE`**  | *accept*    | *accept*      | *accept*       | *accept*       | *accept*       | *accept*      | *accept*    | `LPAREN_TOKEN`  |
