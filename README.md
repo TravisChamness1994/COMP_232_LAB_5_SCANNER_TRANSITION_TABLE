@@ -25,24 +25,24 @@ We can quickly pick out the tokens:
 * left parenthesis (lparen)
 * right parenthesis (rparen)
 
-## FSA
+## FSM
 
-From here, we can design a finite state machine (or finite state automata, FSA for short) for tokenization:
+From here, we can design a finite state machine (or finite state automata, FSM for short) for tokenization:
 
-![sample fsa](./figures/sample_fsa_1.png)
+![sample fsm](./figures/sample_fsa_1.png)
 
 Note that in the figure above, the `INVALID` state is the starting state.
 
-There are a few simplifying shortcuts taken in the notation for the FSA above and which you will need to follow in your FSA design for your designed machines to work with the provided code:
+There are a few simplifying shortcuts taken in the notation for the FSM above and which you will need to follow in your FSM design for your designed machines to work with the provided code:
 
-* All states are accepting states; any state which would be a "reject" state in most pattern-recognizing FSAs is instead an "error accept" state, meaning the string which would be rejected is instead accepted and tokenized, but tokenized as an invalid token.
+* All states are accepting states; any state which would be a "reject" state in most pattern-recognizing FSMs is instead an "error accept" state, meaning the string which would be rejected is instead accepted and tokenized, but tokenized as an invalid token.
 * Any characters not represented by a transition are assumed to lead to acceptance in the current state. If the current state is a "valid accept" state, then the offending character should be assumed to be part of the next token (and thereby returned to the input stream). If, on the other hand, the current state is an "error accept", this means the offending character is part of the current (invalid) token (so it is not returned to the input stream).
 
-The assumptions above allow for simpler (smaller) FSAs which can handle invalid inputs.
+The assumptions above allow for simpler (smaller) FSMs which can handle invalid inputs.
 
 ## Transition Table
 
-We can now encode this FSA in a table. We will first perform the encoding in a human-readable fashion, and then discuss the specifics of encoding it for use with the utilities provided in the lab download.
+We can now encode this FSM in a table. We will first perform the encoding in a human-readable fashion, and then discuss the specifics of encoding it for use with the utilities provided in the lab download.
 
 The first thing we must do is enumerate all of the types of tokens that can be returned, and all of the states in our machine. The two are 1-1 in this example, but that is not always the case!
 
@@ -76,9 +76,9 @@ Next, we need to partition the characters used as machine transitions into chara
 * `\n \t\r`
 * `other`
 
-Most of the character classes above should be intuitive based on the FSA. Note the two extra classes, at the bottom. The first consists of the newline character, the space character, the tab character, and the carriage return character. This denotes the set of white space characters. For simplicity's sake, white space was not included in the FSA. White space characters are assumed to not be part of any token. They they may be used to signify the end of a token, however; the string `1 1` would be tokenized as two number 1's, whereas `11` would be tokenized as a single number 11. The second extra character class is for any characters that do not fall into any of the other classes. Generally, when a character in this class (i.e. not in any other class) is encountered, it is either evaluated independently as an invalid token or it is evaluated as the end of an invalid token.
+Most of the character classes above should be intuitive based on the FSM. Note the two extra classes, at the bottom. The first consists of the newline character, the space character, the tab character, and the carriage return character. This denotes the set of white space characters. For simplicity's sake, white space was not included in the FSM. White space characters are assumed to not be part of any token. They they may be used to signify the end of a token, however; the string `1 1` would be tokenized as two number 1's, whereas `11` would be tokenized as a single number 11. The second extra character class is for any characters that do not fall into any of the other classes. Generally, when a character in this class (i.e. not in any other class) is encountered, it is either evaluated independently as an invalid token or it is evaluated as the end of an invalid token.
 
-Finally, we can represent the FSA as a transition table:
+Finally, we can represent the FSM as a transition table:
 
 |                     | **`0-9`**   | **`+ -`**     | **`* / %`**    | **`(`**        | **`)`**        | **`\n \r\t`** | **`other`** |                 |
 |:------------------- |:-----------:|:-------------:|:--------------:|:--------------:|:--------------:|:-------------:|:-----------:| ---------------:|
@@ -94,7 +94,7 @@ Let's explore the transition table above.
 
 The left-most column represents the current state of the machine. The top row represents the character class of the new character being processed. The contents of the table denote what action should be taken if the machine is in any state when it encounters a character from any class.
 
-For instance, the `INT_STATE` in the second column from the left and second row from the top means that if the FSA is in the `INVALID_STATE` and it encounters a digit `0-9`, it should transition to the `INT_STATE`.
+For instance, the `INT_STATE` in the second column from the left and second row from the top means that if the FSM is in the `INVALID_STATE` and it encounters a digit `0-9`, it should transition to the `INT_STATE`.
 
 While tokenizing, a buffer is used to hold all of the characters comprising the token being constructed. Whenever a state transition happens, the new character is added to this buffer, so when the token is done being constructed its entire value (in string form) is in the buffer.
 
@@ -136,7 +136,7 @@ The code provided in the lab handout takes tables exclusively in a very specific
 	* This is the string used to represent the token type, and will be what is printed as the token type in the output.
 	* The first token type listed is the type that will be assigned to invalid inputs, so it should be given a name like `INVALID_TOKEN`
 	* Escape sequences in token type names are not supported.
-* Line 4 is a list of the names of all states in the FSA.
+* Line 4 is a list of the names of all states in the FSM.
 	* Formatted the same as line 3, names separated by delimiters.
 	* These names will never be printed, so they don't need to be pretty. Mine are descriptions, but integer names would work fine here.
 	* Like token type names, state names do not support escape sequences.
@@ -159,7 +159,7 @@ After the run configurations have been set up, run! Compare `input_1.txt` to the
 
 ## TASK 1:
 
-Expand the FSA and transition table above to work for the following grammar:
+Expand the FSM and transition table above to work for the following grammar:
 
 ```
 <expr> ::= <term> | <expr> <addop> <term>
@@ -179,7 +179,7 @@ Then, modify `table_1.table` (in the `tables` folder in the lab download) to mat
 
 Finally, modify `input_1.txt` (in the `inputs` folder) to test your new table.
 
-Your submission documentation should include your test inputs alongside their corresponding outputs. It should also include the FSA, which may be a photo of a hand-drawn picture (which you can make in groups on the whiteboard in class), but it can be made using diagram drawing utilities like Gliffy if you prefer. Regardless of how the table is made, it must be neat and readable to receive credit.
+Your submission documentation should include your test inputs alongside their corresponding outputs. It should also include the FSM, which may be a photo of a hand-drawn picture (which you can make in groups on the whiteboard in class), but it can be made using diagram drawing utilities like Gliffy if you prefer. Regardless of how the table is made, it must be neat and readable to receive credit.
 
 If you wish to challenge yourself, construct a table which accepts floats in all of these forms:
 
@@ -196,7 +196,7 @@ but still outputs invalid tokens when given inputs like:
 
 ## TASK 2:
 
-Create an FSA and transition table for the following grammar:
+Create an FSM and transition table for the following grammar:
 
 ```
 <program> ::= <statement> | <statement> <program>
@@ -226,7 +226,29 @@ Your table should be put in a file called `table_2.table` in the `tables` folder
 
 You may assume that identifiers and keywords (`print` and `repeat`)  will be distinguished by some post-processing; they may both return the same type of token.
 
-Again, include your test inputs alongside their outputs and your include FSA in your documentation.
+Again, include your test inputs alongside their outputs and your include FSM in your documentation.
+
+## Task 3:
+
+Create an FSM an transition table for the following grammar:
+
+```
+logexpr ::= 
+proposition
+| assert ( proposition )
+| retract ( proposition )
+| ( logexpr )
+| NOT logexpr
+| logexpr AND logexpr
+| logexpr OR logexpr
+
+letter ::= [a-zA-Z]
+proposition ::= '{letter}({letter}| )*'
+```
+
+This time, your FSM and transition table must differentiate between keywords and other tokens; `assert`, `retract`, `AND`, `OR`, and `NOT` must all be tokenized individually.
+
+Include your test inputs alongside their outputs in your documentation, as well as your FSM.
 
 ## Bonus Task
 
